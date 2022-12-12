@@ -10,10 +10,19 @@ const fetchGifs = async (url) => {
   }
 };
 
-const init = () => {
+const randomGifs = async () => {
+  let url = `https://api.giphy.com/v1/gifs/trending?api_key=${APIKEY}&limit=12&q=`;
+  console.log(url);
+  const fetchedGifs = await fetchGifs(url);
+  console.log(fetchedGifs);
+  generateGifs(fetchedGifs.data);
+};
+randomGifs();
+
+const searchGifs = () => {
   document.getElementById("searchBtn").addEventListener("click", async (e) => {
     e.preventDefault();
-    let url = `https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&limit=3&q=`;
+    let url = `https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&limit=12&q=`;
     let str = document.getElementById("search").value.trim();
     url = url.concat(str);
     console.log(url);
@@ -22,7 +31,7 @@ const init = () => {
     generateGifs(fetchedGifs.data);
   });
 };
-document.addEventListener("DOMContentLoaded", init);
+searchGifs();
 
 const gifsContainer = document.getElementById("gifs-wrapper");
 
